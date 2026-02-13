@@ -6,21 +6,21 @@
 <a name="english"></a>
 ## 🇬🇧 English
 
-This project provides a robust solution to enable **Smart Right-to-Left (RTL)** support for the Antigravity AI interface. It fixes Arabic text direction, improves fonts, and ensures code blocks remain readable (LTR).
+This project provides a robust solution to enable **Smart Right-to-Left (RTL)** support for the Antigravity AI interface. It now covers both the **Chat Interface** and **File Explanations/Webviews**, ensuring a consistent Arabic experience throughout the IDE.
 
 ### ✨ Features
+- **Full UI Support**: Patches both Chat and Webviews (Artifacts, Markdown previews, etc.).
 - **Smart Text Direction**: Arabic text flows right-to-left, English flows left-to-right via `unicode-bidi: plaintext`.
-- **Better Typography**: Enforces `Cairo`, `Segoe UI`, or `Roboto` for a modern look.
-- **Code Logic Protection**: Code blocks (`pre`, `code`) are strictly kept LTR to prevent syntax confusion.
-- **Safe Installation**: Automatically creates a backup (`.bak`) before applying changes.
-- **Auto-Discovery**: Finds the installation path automatically on Linux.
+- **Better Typography**: Enforces `Cairo`, `Segoe UI`, or `Roboto`.
+- **Code Logic Protection**: Code blocks (`pre`, `code`) remain strict LTR.
+- **Safe Installation**: Auto-backup (`.bak`) for every modified file.
+- **Auto-Discovery**: Finds installation paths automatically.
 
 ### 🚀 Installation
 
 #### Method 1: One-Line Install (Recommended)
-You can run this directly from your terminal if you have `curl`:
+Clone and run:
 ```bash
-# Clone and run (assuming you upload this repo)
 git clone https://github.com/YOUR_USERNAME/antigravity-rtl-support.git
 cd antigravity-rtl-support
 chmod +x install.sh
@@ -28,51 +28,36 @@ sudo ./install.sh
 ```
 
 #### Method 2: Manual Check
-If the script doesn't find the path, run it with the explicit path:
-```bash
-sudo ./install.sh /path/to/antigravity/cascade-panel.html
-```
+The script searches for `cascade-panel.html` and `webview/.../index.html`. If not found, you can manually edit the `TARGETS` array in the script.
 
 ### 🔄 Uninstallation (Restore)
-To restore the original look, simply rename the backup file:
-```bash
-sudo mv /path/to/cascade-panel.html.bak /path/to/cascade-panel.html
-```
+To restore, rename the `.bak` files back to their original names in the respective directories.
 
 ---
 
 <a name="arabic"></a>
 ## 🇸🇦 العربية
 
-هذا المشروع يقدم حلاً قوياً لتفعيل **دعم اللغة العربية (RTL)** بشكل ذكي في واجهة Antigravity AI. يقوم بإصلاح اتجاه النصوص العربية، تحسين الخطوط، وضمان بقاء الأكواد البرمجية مقروءة (من اليسار لليمين).
+هذا المشروع يقدم حلاً شاملاً لتفعيل **دعم اللغة العربية (RTL)** في واجهة Antigravity AI. الآن يدعم **واجهة الدردشة** و **نوافذ شرح الملفات (Webviews)**، مما يضمن تجربة عربية متناسقة في كامل المحرر.
 
 ### ✨ المميزات
-- **توجيه ذكي للنصوص**: النصوص العربية تظهر من اليمين لليسار، والإنجليزية من اليسار لليمين تلقائياً.
-- **خطوط أفضل**: استخدام خطوط حديثة مثل `Cairo` أو `Segoe UI` لقراءة مريحة.
-- **حماية الأكواد**: الأكواد البرمجية (`pre`, `code`) تبقى دائماً من اليسار لليمين (LTR) لمنع تداخل الرموز.
-- **تثبيت آمن**: يتم إنشاء نسخة احتياطية (`.bak`) تلقائياً قبل أي تعديل.
-- **اكتشاف تلقائي**: يبحث السكريبت عن مسار التثبيت تلقائياً على أنظمة لينكس.
+- **دعم شامل للواجهة**: يشمل التعديل واجهة الشات ونوافذ عرض الملفات (Markdown, Artifacts).
+- **توجيه ذكي للنصوص**: النصوص العربية تظهر من اليمين لليسار تلقائياً.
+- **خطوط أفضل**: تحسين الخطوط لتكون أكثر وضوحاً (`Cairo`, `Segoe UI`).
+- **حماية الأكواد**: الأكواد البرمجية تبقى دائماً من اليسار لليمين (LTR).
+- **تثبيت آمن**: يتم أخذ نسخ احتياطية لكل ملف يتم تعديله.
+- **اكتشاف تلقائي**: يبحث السكريبت عن الملفات المطلوبة ويعدلها تلقائياً.
 
 ### 🚀 التثبيت
 
-#### الطريقة الأولى: التثبيت المباشر (موصى به)
-يمكنك تشغيل الأوامر التالية في التيرمينال:
+#### الطريقة الأولى: التثبيت المباشر
+حمل المستودع وشغل السكريبت:
 ```bash
-# قم بتحميل المستودع وتشغيل التثبيت
 git clone https://github.com/YOUR_USERNAME/antigravity-rtl-support.git
 cd antigravity-rtl-support
 chmod +x install.sh
 sudo ./install.sh
 ```
 
-#### الطريقة الثانية: التحديد اليدوي
-إذا لم يجد السكريبت المسار تلقائياً، يمكنك تحديده يدوياً:
-```bash
-sudo ./install.sh /path/to/antigravity/cascade-panel.html
-```
-
-### 🔄 الاستعادة (إلغاء التثبيت)
-لاستعادة الشكل الأصلي، ببساطة قم باسترجاع النسخة الاحتياطية التي تم إنشاؤها:
-```bash
-sudo mv /path/to/cascade-panel.html.bak /path/to/cascade-panel.html
-```
+### 🔄 الاستعادة
+لاستعادة النسخ الأصلية، قم بإعادة تسمية ملفات `.bak` إلى أسمائها الأصلية في المسارات المعدلة.
