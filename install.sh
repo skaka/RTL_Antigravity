@@ -8,7 +8,7 @@
 #              Custom Editors (Workflow/Rule Editors).
 # Author:      Antigravity Community
 # License:     MIT
-# Version:     3.0
+# Version:     3.1
 # -----------------------------------------------------------------------------
 
 # set -e  <-- Disabled to prevent premature exit on grep/diff
@@ -21,8 +21,8 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-VERSION="3.0"
-PATCH_MARKER="Smart RTL Support v3"
+VERSION="3.1"
+PATCH_MARKER="Smart RTL Support v3.1"
 
 # --- Uninstall Mode ---
 if [ "$1" = "--uninstall" ] || [ "$1" = "-u" ]; then
@@ -124,8 +124,8 @@ fi
 
 # Core RTL CSS — uses unicode-bidi: plaintext for auto-detection
 CSS_CORE='
-/* --- Smart RTL Support v3 by Antigravity Community --- */
-/* Auto-detects text direction: Arabic=RTL, English=LTR, Code=LTR */
+/* --- Smart RTL Support v3.1 by Antigravity Community --- */
+/* v3.1 Fixes: Lists bullets on right, Input cursor on right */
 
 /* 1. Base: Auto-detect direction for all text elements */
 body, p, h1, h2, h3, h4, h5, h6, span, div, section, article,
@@ -138,13 +138,14 @@ td, th, caption, figcaption, blockquote, details, summary,
     line-height: 1.7 !important;
 }
 
-/* 2. Lists: auto-detect direction per-item */
+/* 2. Lists: FORCE RTL so bullets/numbers appear on the Right */
 ul, ol {
-    unicode-bidi: plaintext !important;
-    text-align: start !important;
+    direction: rtl !important;
+    text-align: right !important;
     padding-inline-start: 25px !important;
 }
 li {
+    /* Text inside list item auto-detects direction */
     unicode-bidi: plaintext !important;
     text-align: start !important;
     list-style-position: outside !important;
@@ -168,8 +169,9 @@ th, td {
     text-align: start !important;
 }
 
-/* 5. Input fields: auto-detect direction */
+/* 5. Input fields: Default to RTL (cursor on right), flip for English */
 input[type="text"], textarea {
+    direction: rtl !important; 
     unicode-bidi: plaintext !important;
     text-align: start !important;
 }
@@ -186,7 +188,7 @@ blockquote {
     border-inline-start: 4px solid var(--vscode-textBlockQuote-border, #007acc) !important;
     border-inline-end: none !important;
 }
-/* --- End Smart RTL Support v3 --- */
+/* --- End Smart RTL Support v3.1 --- */
 '
 
 # HTML wrapper
