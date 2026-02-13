@@ -11,7 +11,7 @@
 # Version:     3.0
 # -----------------------------------------------------------------------------
 
-set -e
+# set -e  <-- Disabled to prevent premature exit on grep/diff
 
 # ANSI Colors
 GREEN='\033[0;32m'
