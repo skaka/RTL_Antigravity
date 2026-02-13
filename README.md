@@ -21,8 +21,8 @@ This project provides a robust solution to enable **Smart Right-to-Left (RTL)** 
 #### Method 1: One-Line Install (Recommended)
 Clone and run:
 ```bash
-git clone https://github.com/YOUR_USERNAME/antigravity-rtl-support.git
-cd antigravity-rtl-support
+git clone https://github.com/skaka/RTL_Antigravity.git
+cd RTL_Antigravity
 chmod +x install.sh
 sudo ./install.sh
 ```
@@ -53,8 +53,8 @@ To restore, rename the `.bak` files back to their original names in the respecti
 #### الطريقة الأولى: التثبيت المباشر
 حمل المستودع وشغل السكريبت:
 ```bash
-git clone https://github.com/YOUR_USERNAME/antigravity-rtl-support.git
-cd antigravity-rtl-support
+git clone https://github.com/skaka/RTL_Antigravity.git
+cd RTL_Antigravity
 chmod +x install.sh
 sudo ./install.sh
 ```
