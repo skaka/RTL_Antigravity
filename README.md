@@ -1,87 +1,132 @@
-# 🌙 Antigravity Enhanced RTL Support
-**[English](#english) | [العربية](#arabic)**
+# 🌍 Antigravity RTL Support
+
+دعم اللغة العربية واللغات ذات الاتجاه من اليمين إلى اليسار (RTL) في تطبيق [Antigravity](https://antigravity.dev/).
+
+<div dir="rtl">
+
+> **ملاحظة:** هذا المشروع يضيف دعم RTL كامل لتطبيق Antigravity — بما في ذلك نافذة الدردشة، صفحة المراجعة (Review/Walkthrough)، ومعاينة Markdown.
+
+</div>
 
 ---
 
-<a name="english"></a>
-## 🇬🇧 English
+## 📸 المشكلة
 
-This project provides a robust solution to enable **Smart Right-to-Left (RTL)** support for the entire Antigravity AI interface. It covers **Chat**, **Artifact Viewer** (implementation plans, tasks, walkthroughs), and **Custom Editors**, ensuring a seamless Arabic experience everywhere.
+Antigravity لا يدعم عرض النصوص العربية بشكل صحيح — النص يظهر من اليسار إلى اليمين (LTR) بدلاً من اليمين إلى اليسار (RTL). هذا يؤثر على:
 
-### ✨ What's New in v3.1
-- **📝 Chat Input Fix**: Input box now starts from Right-to-Left (RTL) by default, with cursor on the right.
-- **🔢 List Alignment**: Bullets and numbers are now forced to the Right side (`direction: rtl`), fixing the logic where numbers appeared on the left.
-- **🎯 Full Artifact Support**: `implementation_plan.md`, `task.md`, and `walkthrough.md` display Arabic text RTL automatically.
-- **🧠 Smart Detection**: Uses `unicode-bidi: plaintext` for text content.
-- **🔒 Code Protection**: Code blocks remain strict LTR.
+- **نافذة الدردشة** (Chat Panel)
+- **صفحة المراجعة** (Review/Walkthrough)
+- **معاينة Markdown** (Markdown Preview)
+- **محتوى Webview**
 
-### 📦 Files Patched
-| File | Purpose |
-|---|---|
-| `cascade-panel.html` | Chat interface |
-| `webview/.../index.html` | Artifact viewer (markdown rendering) |
-| `workflowEditor.css` | Task/workflow editor |
-| `ruleEditor.css` | Rule editor |
+## ✅ الحل
 
-### 🚀 Installation
+يعدّل هذا المشروع **4 ملفات** في Antigravity لإضافة دعم RTL مع الحفاظ على واجهة التطبيق بالاتجاه الأصلي (LTR):
+
+### الملفات المعدّلة
+
+| # | الملف | الوظيفة | التعديل |
+|---|-------|---------|---------|
+| 1 | `workbench.html` | **الملف الرئيسي** — يتحكم في كل العرض | `dir="rtl"` + `.monaco-workbench { direction: rtl }` + إعادة كل عناصر الواجهة إلى LTR |
+| 2 | `cascade-panel.html` | نافذة الدردشة (Chat) | CSS RTL مع Tailwind Typography overrides |
+| 3 | `index.html` | محتوى Webview | حقن RTL CSS داخل `toContentHtml()` |
+| 4 | `markdown.css` | معاينة Markdown | إضافة CSS RTL في نهاية الملف |
+
+### كيف يعمل الحل الرئيسي (workbench.html)
+
+```
+<html dir="rtl">              ← يضبط الاتجاه الجذري لـ RTL
+  ↓
+.monaco-workbench {            ← يمرر RTL لمحتوى المحرر والمراجعة
+  direction: rtl
+}
+  ↓
+.part.titlebar   { direction: ltr }  ← شريط العنوان يبقى LTR
+.menubar         { direction: ltr }  ← القوائم تبقى LTR
+.part.sidebar    { direction: ltr }  ← الشريط الجانبي يبقى LTR
+.part.statusbar  { direction: ltr }  ← شريط الحالة يبقى LTR
+.tabs-container  { direction: ltr }  ← التبويبات تبقى LTR
+... (وباقي عناصر الواجهة)
+```
+
+**النتيجة:** المحتوى العربي يظهر RTL ← والواجهة تبقى LTR.
+
+---
+
+## 🚀 التثبيت
 
 ```bash
+# استنساخ المشروع
 git clone https://github.com/skaka/RTL_Antigravity.git
 cd RTL_Antigravity
-chmod +x install.sh
-sudo ./install.sh
+
+# تشغيل سكريبت التثبيت (يحتاج صلاحيات sudo)
+sudo bash install.sh
+
+# أعد تشغيل Antigravity
 ```
 
-### 🔄 Uninstallation
+## 🔄 إلغاء التثبيت
 
-To restore original files:
 ```bash
-sudo ./install.sh --uninstall
+sudo bash install.sh --uninstall
 ```
 
-Then restart Antigravity.
+يستعيد جميع الملفات من النسخ الاحتياطية (`.bak`).
 
 ---
 
-<a name="arabic"></a>
-## 🇸🇦 العربية
+## 📁 هيكل المشروع
 
-هذا المشروع يقدم حلاً شاملاً لتفعيل **دعم اللغة العربية (RTL)** في كامل واجهة Antigravity AI — **الدردشة**، **نوافذ عرض الملفات** (implementation_plan, task, walkthrough)، و **محررات المهام**.
-
-### ✨ الجديد في الإصدار 3.1
-- **📝 إصلاح مربع الإدخال**: المؤشر يبدأ الآن من اليمين (RTL) في خانة الدردشة.
-- **🔢 محاذاة القوائم**: النقاط والأرقام تظهر الآن إجبارياً على اليمين.
-- **🎯 دعم كامل للملفات**: `task.md` و `walkthrough.md` تظهر بشكل صحيح.
-- **🧠 اكتشاف ذكي**: يستخدم `unicode-bidi: plaintext` للنصوص.
-- **🔒 حماية الأكواد**: الأكواد البرمجية تبقى دائماً LTR.
-
-### 📦 الملفات المعدّلة
-| الملف | الوظيفة |
-|---|---|
-| `cascade-panel.html` | واجهة الدردشة |
-| `webview/.../index.html` | عارض الملفات (Markdown) |
-| `workflowEditor.css` | محرر المهام |
-| `ruleEditor.css` | محرر القواعد |
-
-### 🚀 التثبيت
-
-```bash
-git clone https://github.com/skaka/RTL_Antigravity.git
-cd RTL_Antigravity
-chmod +x install.sh
-sudo ./install.sh
+```
+RTL_Antigravity/
+├── install.sh          # سكريبت التثبيت والإلغاء
+├── README.md           # هذا الملف
+└── preview.html        # صفحة معاينة للتجربة المحلية
 ```
 
-### 🔄 إلغاء التثبيت
+## 📍 مسارات الملفات المعدّلة
 
-لاستعادة الملفات الأصلية:
-```bash
-sudo ./install.sh --uninstall
+```
+/usr/share/antigravity/resources/app/
+├── out/vs/code/electron-browser/workbench/
+│   └── workbench.html                          ← [1] الملف الرئيسي
+├── extensions/antigravity/
+│   └── cascade-panel.html                      ← [2] نافذة الدردشة
+├── out/vs/workbench/contrib/webview/browser/pre/
+│   └── index.html                              ← [3] Webview
+└── extensions/markdown-language-features/media/
+    └── markdown.css                            ← [4] معاينة Markdown
 ```
 
-ثم أعد تشغيل Antigravity.
+## ⚠️ ملاحظات مهمة
+
+- **أعد تشغيل Antigravity بالكامل** بعد تشغيل `install.sh`
+- **بعد تحديث Antigravity** قد تحتاج لإعادة تشغيل `install.sh` لأن التحديث يستبدل الملفات
+- السكريبت ينشئ نسخ احتياطية `.bak` تلقائيًا، ويتخطى الملفات المعدّلة مسبقًا
+- **الأكواد البرمجية** تبقى دائمًا بالاتجاه LTR
+
+## 📝 سجل التغييرات
+
+### v5.0 (2026-02-14)
+- ✅ **اكتشاف الملف الرئيسي:** `workbench.html` هو المتحكم بعرض صفحة المراجعة
+- ✅ **حل `dir="rtl"` + LTR overrides:** RTL للمحتوى مع الحفاظ على واجهة LTR
+- ✅ تغطية كاملة: دردشة + مراجعة + Markdown + Webview
+
+### v3.1
+- إضافة دعم RTL لقوائم الدردشة
+- إصلاح اتجاه حقل الإدخال
+
+### v3.0
+- دعم RTL للـ Webview و Artifact
+- نظام الاكتشاف التلقائي بـ `unicode-bidi: plaintext`
 
 ---
 
-### 📄 License
-MIT — Free for everyone 🌍
+## 📄 الرخصة
+
+MIT License
+
+## 🤝 المساهمة
+
+المساهمات مرحّب بها! افتح Issue أو Pull Request.
